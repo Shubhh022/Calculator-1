@@ -1,3 +1,4 @@
+
 let display = document.getElementById("display");
 
 let buttons = document.querySelectorAll("button");
@@ -24,6 +25,22 @@ for (let button of buttons) {
             display.value = firstNumber + operator + secondNumber;
         }
 
+        else if (value == ".") {
+
+            if (operator == "") {
+                if (!firstNumber.includes(".")) {
+                    firstNumber = firstNumber + ".";
+                }
+            }
+            else {
+                if (!secondNumber.includes(".")) {
+                    secondNumber = secondNumber + ".";
+                }
+            }
+
+            display.value = firstNumber + operator + secondNumber;
+        }
+
         else if (value == "+" || value == "-" || value == "*" || value == "/") {
 
             operator = value;
@@ -45,7 +62,12 @@ for (let button of buttons) {
                 result = Number(firstNumber) * Number(secondNumber);
             }
             else if (operator == "/") {
-                result = Number(firstNumber) / Number(secondNumber);
+                if (Number(secondNumber) == 0) {
+                    result = "Cannot divide by zero";
+                }
+                else {
+                    result = Number(firstNumber) / Number(secondNumber);
+                }
             }
 
             display.value = result;
