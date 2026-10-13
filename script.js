@@ -1,4 +1,4 @@
-
+```javascript
 let display = document.getElementById("display");
 
 let buttons = document.querySelectorAll("button");
@@ -6,6 +6,8 @@ let buttons = document.querySelectorAll("button");
 let firstNumber = "";
 let operator = "";
 let secondNumber = "";
+let result = "";
+let calculated = false;
 
 for (let button of buttons) {
 
@@ -13,9 +15,16 @@ for (let button of buttons) {
 
         let value = button.innerText;
 
+        // Number buttons
         if (value >= "0" && value <= "9") {
 
-            if (operator == "") {
+            if (calculated == true) {
+                firstNumber = value;
+                secondNumber = "";
+                operator = "";
+                calculated = false;
+            }
+            else if (operator == "") {
                 firstNumber = firstNumber + value;
             }
             else {
@@ -25,9 +34,16 @@ for (let button of buttons) {
             display.value = firstNumber + operator + secondNumber;
         }
 
+        // Decimal button
         else if (value == ".") {
 
-            if (operator == "") {
+            if (calculated == true) {
+                firstNumber = "0.";
+                secondNumber = "";
+                operator = "";
+                calculated = false;
+            }
+            else if (operator == "") {
                 if (!firstNumber.includes(".")) {
                     firstNumber = firstNumber + ".";
                 }
@@ -41,16 +57,65 @@ for (let button of buttons) {
             display.value = firstNumber + operator + secondNumber;
         }
 
-        else if (value == "+" || value == "-" || value == "*" || value == "/") {
+        // Operator buttons
+        else if (
+            value == "+" ||
+            value == "-" ||
+            value == "*" ||
+            value == "/"
+        ) {
+
+            if (firstNumber == "") {
+                return;
+            }
+
+            // Continue calculation using the previous result
+            if (calculated == true) {
+                firstNumber = String(result);
+                secondNumber = "";
+                calculated = false;
+            }
+
+            // Calculate if another operator is pressed
+            if (operator != "" && secondNumber != "") {
+
+                if (operator == "+") {
+                    result = Number(firstNumber) + Number(secondNumber);
+                }
+                else if (operator == "-") {
+                    result = Number(firstNumber) - Number(secondNumber);
+                }
+                else if (operator == "*") {
+                    result = Number(firstNumber) * Number(secondNumber);
+                }
+                else if (operator == "/") {
+                    if (Number(secondNumber) == 0) {
+                        display.value = "Cannot divide by zero";
+                        firstNumber = "";
+                        secondNumber = "";
+                        operator = "";
+                        return;
+                    }
+                    else {
+                        result = Number(firstNumber) / Number(secondNumber);
+                    }
+                }
+
+                firstNumber = String(result);
+                secondNumber = "";
+            }
 
             operator = value;
 
             display.value = firstNumber + operator;
         }
 
+        // Equal button
         else if (value == "=") {
 
-            let result;
+            if (firstNumber == "" || operator == "" || secondNumber == "") {
+                return;
+            }
 
             if (operator == "+") {
                 result = Number(firstNumber) + Number(secondNumber);
@@ -62,8 +127,14 @@ for (let button of buttons) {
                 result = Number(firstNumber) * Number(secondNumber);
             }
             else if (operator == "/") {
+
                 if (Number(secondNumber) == 0) {
-                    result = "Cannot divide by zero";
+                    display.value = "Cannot divide by zero";
+                    firstNumber = "";
+                    secondNumber = "";
+                    operator = "";
+                    calculated = false;
+                    return;
                 }
                 else {
                     result = Number(firstNumber) / Number(secondNumber);
@@ -71,13 +142,21 @@ for (let button of buttons) {
             }
 
             display.value = result;
+
+            firstNumber = String(result);
+            secondNumber = "";
+            operator = "";
+            calculated = true;
         }
 
+        // Clear button
         else if (value == "C") {
 
             firstNumber = "";
             secondNumber = "";
             operator = "";
+            result = "";
+            calculated = false;
 
             display.value = "0";
         }
@@ -85,3 +164,4 @@ for (let button of buttons) {
     });
 
 }
+```
