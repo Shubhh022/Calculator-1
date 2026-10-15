@@ -1,4 +1,3 @@
-```javascript
 let display = document.getElementById("display");
 
 let buttons = document.querySelectorAll("button");
@@ -57,6 +56,28 @@ for (let button of buttons) {
             display.value = firstNumber + operator + secondNumber;
         }
 
+        // Percentage button
+        else if (value == "%") {
+
+            if (operator == "") {
+
+                if (firstNumber != "") {
+                    firstNumber = String(Number(firstNumber) / 100);
+                    display.value = firstNumber;
+                }
+
+            }
+            else {
+
+                if (secondNumber != "") {
+                    secondNumber = String(Number(secondNumber) / 100);
+                    display.value = firstNumber + operator + secondNumber;
+                }
+
+            }
+
+        }
+
         // Operator buttons
         else if (
             value == "+" ||
@@ -69,14 +90,12 @@ for (let button of buttons) {
                 return;
             }
 
-            // Continue calculation using the previous result
             if (calculated == true) {
                 firstNumber = String(result);
                 secondNumber = "";
                 calculated = false;
             }
 
-            // Calculate if another operator is pressed
             if (operator != "" && secondNumber != "") {
 
                 if (operator == "+") {
@@ -94,6 +113,7 @@ for (let button of buttons) {
                         firstNumber = "";
                         secondNumber = "";
                         operator = "";
+                        calculated = false;
                         return;
                     }
                     else {
@@ -164,4 +184,3 @@ for (let button of buttons) {
     });
 
 }
-```
