@@ -13,7 +13,24 @@ for (let button of buttons) {
     button.addEventListener("click", function() {
 
         let value = button.innerText;
+// Backspace button
+if (value == "⌫") {
 
+    if (calculated == true) {
+        return;
+    }
+
+    if (operator == "") {
+        firstNumber = firstNumber.slice(0, -1);
+        display.value = firstNumber == "" ? "0" : firstNumber;
+    }
+    else {
+        secondNumber = secondNumber.slice(0, -1);
+        display.value = firstNumber + operator + secondNumber;
+    }
+
+    return;
+}
         // Number buttons
         if (value >= "0" && value <= "9") {
 
