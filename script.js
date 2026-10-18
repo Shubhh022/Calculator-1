@@ -31,6 +31,28 @@ if (value == "⌫") {
 
     return;
 }
+// Positive / Negative button
+if (value == "+/-") {
+
+    if (operator == "") {
+
+        if (firstNumber != "") {
+            firstNumber = String(Number(firstNumber) * -1);
+            display.value = firstNumber;
+        }
+
+    }
+    else {
+
+        if (secondNumber != "") {
+            secondNumber = String(Number(secondNumber) * -1);
+            display.value = firstNumber + operator + secondNumber;
+        }
+
+    }
+
+    return;
+}
         // Number buttons
         if (value >= "0" && value <= "9") {
 
