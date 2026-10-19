@@ -4,13 +4,13 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: rgb(240, 110, 110);
+    background-color: rgb(99, 87, 87);
 }
 
 .calculator {
     width: 320px;
     padding: 20px;
-    background-color: black;
+    background-color: rgb(56, 5, 5);
     box-sizing: content-box;
 }
 
